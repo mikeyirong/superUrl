@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mike.mapper">
+	<resultMap type="com.mike.entity.SuperUrl" id="SuperUrlResultMap">
+		<result property="account" column="account" />
+		<result property="siteCode" column="sitecode" />
+		<result property="asin" column="asin" />
+		<result property="sellerId" column="sellerid" />
+		<result property="md5Code" column="md5code" />
+		<result property="productKeywords" column="productkeywords" />
+		<result property="clickNum" column="clickNum" />
+	</resultMap>
+	<select id="selectUrlByMd5code" resultType="com.mike.entity.SuperUrl">
+		select * from
+		amazon_superurl where md5Code = #{0}
+	</select>
+	<insert id="addUrl" parameterType="com.mike.entity.SuperUrl">
+		insert into amazon_superurl(
+		account,
+		sitecode,
+		asin,
+		sellerid,
+		md5code,
+		productkeywords,
+		startdate
+		)values(
+		#{account},
+		#{siteCode},
+		#{asin},
+		#{sellerId},
+		#{md5Code},
+		#{productKeywords},
+		now()
+		)
+	</insert>
+	<update id="updateClickNum" parameterType="com.mike.entity.SuperUrl">
+		update amazon_superurl set
+		clickNum = #{clickNum}
+		where md5code = #{md5Code}
+	</update>
+	<delete id="deleteByMd5">
+	    delete from amazon_superurl where md5code = #{0}
+	</delete>
+</mapper>
